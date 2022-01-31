@@ -1,0 +1,35 @@
+version: '3'
+services:
+  wap-ud:
+    image: 'wp-aud:latest'
+    ports:
+      - "9091:9091"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: wp-aud
+    depends_on:
+      - database
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://database:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
+    networks:
+      - spring-cloud-network
+
+  database:
+    image: 'postgres:latest'
+    container_name: database
+    ports:
+      - "5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    networks:
+      - spring-cloud-network
+
+networks:
+  spring-cloud-network:
+    driver: bridge
