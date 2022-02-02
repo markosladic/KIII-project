@@ -1,6 +1,6 @@
 version: '3'
 services:
-  wap-ud:
+  wp-aud:
     image: 'wp-aud:latest'
     ports:
       - "9091:9091"
